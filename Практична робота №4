@@ -1,1 +1,42 @@
+#include <stdio.h>
+#include <windows.h>
 
+void number();
+
+int main()
+{
+    SetConsoleCP(1251);  
+    SetConsoleOutputCP(1251);  
+
+    number();  // Виклик функції number()
+
+    return 0;
+}
+
+void number()
+{
+    int n = 0;
+    int point = 0;
+
+    // Перевірка, чи не є введене число меншим за 1 та більшим за 150
+    do{
+        point = 0;
+        printf("\nВведіть натуральне число n: ");
+        scanf("%d", &n);
+        if(n < 1 || n > 150){
+            point = 1;
+            printf("\nЧисло n не може бути меншим за 1 та більшим за 150\n");
+        }
+    } while (point == 1);
+
+    int count = 0;
+
+    // Обчислення
+    for (int m = 1; m < n + 1; m++){
+        if(n % m == n / m){
+            count++;
+        }
+    }
+
+    printf("\nКількість рівних дільників числа %d: %d", n, count);
+}
