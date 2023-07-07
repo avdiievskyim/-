@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <windows.h>
+#include <math.h>
+#include <ctype.h>
+
+#define ALPHABET_SIZE 26
+
+void result ();
+void countLetters(const char *word, int *letterCount);
+int factorial(int n);
+
+
+int main()
+{
+    //Підключення української мови
+    SetConsoleCP(1251);  
+    SetConsoleOutputCP(1251);
+
+    result ();//Виклик функції result
+    return 0;
+}
+
+void result ()
+{
+    int letterCount[ALPHABET_SIZE] = {0}, length, result;
+    char *word;
+    // Виділення пам'яті динамічно
+    word = (char *)calloc(25, sizeof(char));
+
+    // Перевірка успішності виділення пам'яті
+    if (word == NULL) {
+        printf("\nПомилка виділення пам'яті!");
+    }
+    printf ("Введіть слово: ");
+    scanf("%s", word);//Введення слова
+    length = strlen(word);
+    countLetters(word, letterCount);//Виклик функції countLetters, що підраховує кількість входження кожної букви у слово
+    int fac[length], j = 0;;
+
+    //Знаходимо факторіали від кількостей входження кожної букви у слово
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+        if (letterCount[i] > 0) {
+            fac[j] = factorial(letterCount[i]);
+            j++;
+        }
+    }
+
+    //Знаходимо добуток факторіалів
+    int denominator = 1;
+    for (int i = 0; i < j; i++)
+    {
+        denominator = denominator * fac[i];
+    }
+    result = factorial(length)/denominator;//Знаходимо кількість онограм за формулою
+    printf("\nКількість онограм: %d", result);
+
+}
+
+void countLetters(const char *word, int *letterCount) {//Функція для знаходження кількості входження кожної букви у слово
+    while (*word != '\0') {
+        
+        int index = tolower(*word) - 'a';
+        letterCount[index]++;
+        
+        word++;
+    }
+}
+
+int factorial(int n) { //Функція для знаходження факторіалу
+    if (n == 0)
+        return 1;
+    else
+        return n * factorial(n-1);
+}
