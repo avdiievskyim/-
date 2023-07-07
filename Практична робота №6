@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <windows.h>
+#include <math.h>
+
+void module ();
+
+int main()
+{
+    //Підключення української мови
+    SetConsoleCP(1251);  
+    SetConsoleOutputCP(1251);
+
+    module();//Виклик функції module
+    return 0;
+}
+
+void module ()
+{
+    int x1, x2, y1, y2, x, y;
+    float mod;
+    //Введення координатів початку вектора
+    printf ("x1 = ");
+    scanf ("%d", &x1);
+    printf ("y1 = ");
+    scanf ("%d", &y1);
+    //Введення координатів кінця вектора вектора
+    printf ("x2 = ");
+    scanf ("%d", &x2);
+    printf ("y2 = ");
+    scanf ("%d", &y2);
+
+    //Знаходження координатів вектора
+    x = x2 - x1;
+    y = y2 - y1;
+
+    mod = sqrt(pow(x,2)+pow(y,2));//Знаходження модуля вектора
+    printf ("\nМодуль вектора: %.6f", mod);
+
+}
