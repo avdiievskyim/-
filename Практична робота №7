@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <windows.h>
+#include <math.h>
+
+void number_of_points ();
+
+int main()
+{
+    //Підключення української мови
+    SetConsoleCP(1251);  
+    SetConsoleOutputCP(1251);
+
+    number_of_points ();//Виклик функції number_of_points
+    return 0;
+}
+
+void number_of_points ()
+{
+    int x1, x2, y1, y2, r1, r2; 
+    float DistanceBetweenCentersOfCircles;
+    //Введення координатів центра першого кола
+    printf ("x1 = ");
+    scanf ("%d", &x1);
+    printf ("y1 = ");
+    scanf ("%d", &y1);
+    //Радіус першого кола
+    printf ("r1 = ");
+    scanf ("%d", &r1);
+    //Введення координатів кінця вектора вектора
+    printf ("x2 = ");
+    scanf ("%d", &x2);
+    printf ("y2 = ");
+    scanf ("%d", &y2);
+    //Радіус другого кола
+    printf ("r2 = ");
+    scanf ("%d", &r2);
+
+    DistanceBetweenCentersOfCircles = sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2));//Знаходження відстані між центрами кіл
+    
+    //Розглянемо три випадки та виведемо результат
+    if(r1 + r2 > DistanceBetweenCentersOfCircles && DistanceBetweenCentersOfCircles > abs(r1 - r2))
+        printf("Кількість точок перетину: 2");
+    if(r1 + r2 == DistanceBetweenCentersOfCircles || DistanceBetweenCentersOfCircles == abs(r1 - r2))
+        printf("Кількість точок перетину: 1");
+    if(r1 + r2 < DistanceBetweenCentersOfCircles || DistanceBetweenCentersOfCircles < abs(r1 - r2))
+        printf("Кількість точок перетину: 0");
+}
