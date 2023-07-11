@@ -1,1 +1,67 @@
+#include <stdio.h>
+#include <windows.h>
+
+int countSteps(int x, int y) {
+    int step = 0, x1  = x, count0 = -1;
+    float key;
+    //Виключаємо можливість введення х >= у
+    if (y <= x) {
+        return x - y;
+    }
+    key = x + (y - x) / 2.0;//Знаходимо середнє значення між х та у
+    printf ("%f", key);
+    int count = 0;
+    while (x1 < y) {
+        if (((key - x1) < (x1 + step + 1 - key)) && x1 < key) //Умова, при якій х1 не може дорівнювати середньому значення між х та у
+        {
+            x1+=step;
+            count++;
+        }
+        else
+        {
+            if (x1 < key)
+            {
+                step++;
+                x1+=step;
+                count++;
+
+            }
+            if (x1 == key)
+            {
+                x1+=step;
+                count++;
+            }
+            if (x1 > key)
+            {
+                step--;
+                if (step == 0) 
+                {
+                    step++;
+                    count0++; //змінна що рахує кількість падінь змінної step до нуля, щоб виключити деякі випадки із загального лічильника
+                }
+                x1+=step;
+                count++;
+            }
+        }
+    }
+    if (count0 != -1) //Якщо змінна step хоч раз опускалась до нуля
+        count -= count0;//Виключаємо кількість падінь змінної step до нуля +1 дозволеный випадок
+  
+    return count;
+}
+
+int main() {
+    //Підключення української мови
+    SetConsoleCP(1251);  
+    SetConsoleOutputCP(1251);
+    int x, y;
+    printf ("Введіть х: ");
+    scanf ("%d", &x);
+    printf ("Введіть y: ");
+    scanf ("%d", &y);
+    int steps = countSteps(x, y);//Виклик функції, що очислює кількість кроків
+    printf("\nКількість кроків: %d", steps);//Виведення результату
+    
+    return 0;
+}
 
