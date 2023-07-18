@@ -248,8 +248,26 @@ void findticket()
     //Обираємо місце
     do
     {
+        int localindexticket = waycode + datecode + timecode;
         system ("cls");
-        printf("\n\tОберіть місце 1 - 30: ");
+        printf("\n\tОберіть місце 1 - 30: \n");
+        printf("\n______________________________\n");
+        for (int i = 1; i <= 30; i++)
+        {
+            if (ticket[localindexticket + i] == 0)
+            {
+                printf ("\033[0;38;5;40m%3d\033[0m", i);
+            }
+            else
+            {
+                printf ("\033[0;38;5;196m%3d\033[0m", i);
+            }
+            if (i == 10)
+                printf("\n");
+            if (i == 20)
+                printf("\n\n");
+        }
+        printf("\n______________________________\n");
         scanf("%d", &placeticket);
         readyticket[countticket].place = placeticket;
     } while (placeticket < 1 || placeticket > 30);
