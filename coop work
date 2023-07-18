@@ -13,11 +13,13 @@ typedef struct
     char date[12];
     char time[6];
     int place;
+    float price;
 }BOOKEDTICKET;
 BOOKEDTICKET* readyticket;
 
 void usermenu ();
 void findticket ();
+void showtickets ();
 
 int main()
 {
@@ -45,18 +47,22 @@ int main()
 void usermenu ()
 {
     int continuekey;
-    //do
-    //{
+    // do
+    // {
         continuekey = 0;
         printf("\n\t\t\033[3;38;5;2mМеню\033[0m\n");
-        printf("1. Пошук квитків");
+        printf("1. Пошук квитків\n2. Мої поїздки");
         char keymenu;
         keymenu = getche();
         switch (keymenu)
         {
         case 49:
             system("cls");
-            findticket(readyticket);
+            findticket();
+            break;
+        case 50:
+            system("cls");
+            showtickets ();
             break;
 
         
@@ -66,8 +72,8 @@ void usermenu ()
             continuekey++;
             break;
         }
-    //}
-    //while (continuekey == 1);
+    // }
+    // while (continuekey == 1);
 }
 
 void findticket()
@@ -90,21 +96,25 @@ void findticket()
     case 1:
         waycode = 0;
         strcpy(readyticket[countticket].way, "Київ - Львів");
+        readyticket[countticket].price = 527.51;
         system("cls");
         break;
     case 2:
         waycode = 1050;
         strcpy(readyticket[countticket].way, "Київ - Одеса");
+        readyticket[countticket].price = 541.29;
         system("cls");
         break;
     case 3:
         waycode = 2100;
         strcpy(readyticket[countticket].way, "Київ - Запоріжжя");
+        readyticket[countticket].price = 712.78;
         system("cls");
         break;
     case 4:
         waycode = 3150;
         strcpy(readyticket[countticket].way, "Київ - Дніпро");
+        readyticket[countticket].price = 573.22;
         system("cls");
         break;
     case 0:
@@ -238,6 +248,7 @@ void findticket()
     //Обираємо місце
     do
     {
+        system ("cls");
         printf("\n\tОберіть місце 1 - 30: ");
         scanf("%d", &placeticket);
         readyticket[countticket].place = placeticket;
@@ -247,13 +258,19 @@ void findticket()
     indexticket = waycode + datecode + timecode + placeticket;
     readyticket[countticket].code = indexticket;
     ticket[indexticket] = 1;
+    system("cls");
+    printf("Квиток №%d успішо заброньовано.\nДо сплати: \033[0;38;5;160m%.2f грн\033[0m\n\n3", readyticket[countticket].code, readyticket[countticket].price);
     countticket++;
+    goto point1;
+    
+}
 
+void showtickets ()
+{
     for (int j = 0; j < countticket; j++)
     {
-        printf("\nБілет №%d = %d\n%s\n%s\n%s\n%d\n\n", readyticket[j].code, ticket[readyticket[j].code], readyticket[j].way, readyticket[j].date, readyticket[j].time, readyticket[j].place);
+        printf("\n\033[1;38;5;7m\033[4;38;5;7m%d) Квиток\033[0m №%d\n\033[1;38;5;7m\033[4;38;5;7mНапрямок:\033[0m %s\n\033[1;38;5;7m\033[4;38;5;7mДата:\033[0m %s)", j+1, readyticket[j].code, readyticket[j].way, readyticket[j].date);
+        printf("\n\033[1;38;5;7m\033[4;38;5;7mЧас:\033[0m %s\n\033[1;38;5;7m\033[4;38;5;7mМісце:\033[0m %d\n", readyticket[j].time, readyticket[j].place);
     }
     usermenu();
-    
-    
 }
