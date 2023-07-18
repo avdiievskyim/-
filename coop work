@@ -3,6 +3,11 @@
 #include <conio.h>
 #include <string.h>
 
+void usermenu ();
+void findticket ();
+void showtickets ();
+void functodeltickets ();
+
 int countticket = 0;
 int* ticket;
 
@@ -17,9 +22,18 @@ typedef struct
 }BOOKEDTICKET;
 BOOKEDTICKET* readyticket;
 
-void usermenu ();
-void findticket ();
-void showtickets ();
+typedef struct 
+{
+    int code;
+    char way[40];
+    char date[12];
+    char time[6];
+    int place;
+    float price;
+}TICKETSFORDELETE;
+
+BOOKEDTICKET* readyticket;
+
 
 int main()
 {
@@ -34,12 +48,13 @@ int main()
     }
     else
     {
-        readyticket = (BOOKEDTICKET*)calloc(10, sizeof(BOOKEDTICKET));
+        readyticket = (BOOKEDTICKET*)calloc(50, sizeof(BOOKEDTICKET));
         if (readyticket == NULL)
             printf("\nПомилка, не вдалося виділити пам'ять");
         else
             usermenu ();
     }
+    system("cls");
     getch();
     return 0;
 }
@@ -51,7 +66,7 @@ void usermenu ()
     // {
         continuekey = 0;
         printf("\n\t\t\033[3;38;5;2mМеню\033[0m\n");
-        printf("1. Пошук квитків\n2. Мої поїздки");
+        printf("1. Пошук квитків\n2. Мої поїздки\n3. Відмовитись від квитка\n0. Вихід з програми\n");
         char keymenu;
         keymenu = getche();
         switch (keymenu)
@@ -63,9 +78,16 @@ void usermenu ()
         case 50:
             system("cls");
             showtickets ();
+            usermenu();
             break;
-
-        
+        case 48:
+            system("cls");
+            exit(1);
+            break;
+        case 51:
+            system("cls");
+            functodeltickets();
+            break;
         default:
             system("cls");
             printf("\n\t\033[0;38;5;1mПомилка. Введіть корректний пункт меню\033[0m\n");
@@ -78,7 +100,6 @@ void usermenu ()
 
 void findticket()
 {
-    
     system("cls");
     point1:
     //Обираємо напрямок
@@ -298,5 +319,63 @@ void showtickets ()
         printf("\n\033[1;38;5;7m\033[4;38;5;7m%d) Квиток\033[0m №%d\n\033[1;38;5;7m\033[4;38;5;7mНапрямок:\033[0m %s\n\033[1;38;5;7m\033[4;38;5;7mДата:\033[0m %s)", j+1, readyticket[j].code, readyticket[j].way, readyticket[j].date);
         printf("\n\033[1;38;5;7m\033[4;38;5;7mЧас:\033[0m %s\n\033[1;38;5;7m\033[4;38;5;7mМісце:\033[0m %d\n", readyticket[j].time, readyticket[j].place);
     }
+}
+
+void functodeltickets ()
+{
+    TICKETSFORDELETE *deleteticket;
+    deleteticket = (TICKETSFORDELETE*)calloc(50, sizeof(TICKETSFORDELETE));
+    if (deleteticket == NULL)
+        printf("\nПомилка, не вдалося виділити пам'ять");
+    else
+    {
+        int codeofdeleteticket, j = 0;
+        showtickets();
+        printf ("Введіть номер квитка, від якого хочете відмовитись: ");
+        scanf ("%d", &codeofdeleteticket);
+        if (ticket[codeofdeleteticket] == 1)
+        {
+            for (int i = 0; i < countticket; i++)
+            {
+                if (readyticket[i].code != codeofdeleteticket)
+                {
+                    deleteticket[j].code = readyticket[i].code;
+                    strcpy(deleteticket[j].way, readyticket[i].way);
+                    strcpy(deleteticket[j].date, readyticket[i].date);
+                    strcpy(deleteticket[j].time, readyticket[i].time);
+                    deleteticket[j].place = readyticket[i].place;
+                    deleteticket[j].price = readyticket[i].price;
+                    j++;
+                }
+            }
+            free(readyticket);
+            readyticket = (BOOKEDTICKET*)calloc(50, sizeof(BOOKEDTICKET));
+            if (readyticket == NULL)
+                printf("\nПомилка, не вдалося виділити пам'ять");
+            else
+            {
+                for (int i = 0; i < countticket; i++)
+                {
+                    readyticket[i].code = deleteticket[i].code;
+                    strcpy(readyticket[i].way, deleteticket[i].way);
+                    strcpy(readyticket[i].date, deleteticket[i].date);
+                    strcpy(readyticket[i].time, deleteticket[i].time);
+                    readyticket[i].place = deleteticket[i].place;
+                    readyticket[i].price = deleteticket[i].price;
+                }
+            }
+            system("cls");
+            printf ("\n\033[0;38;5;40mВи відмовились від Квитка №%d\033[0m", codeofdeleteticket);
+            ticket[codeofdeleteticket] = 0;
+        }
+        else
+        {
+            system("cls");
+            printf("\n\033[0;38;5;196mПомилка!\033[0m У списку ваших квитків не знайдено квитка №%d\n", codeofdeleteticket);
+            usermenu();
+        }
+    }
+    free(deleteticket);
+    countticket--;
     usermenu();
 }
