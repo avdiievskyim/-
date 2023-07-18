@@ -25,7 +25,7 @@ int main()
 {
     SetConsoleCP(1251);  
     SetConsoleOutputCP(1251);
-    ticket = (int*)calloc(4200, sizeof(int));
+    ticket = (int*)calloc(4300, sizeof(int));
 
     // Перевірка успішності виділення пам'яті
     if (ticket == NULL)
@@ -124,7 +124,7 @@ void findticket()
     default:
         system("cls");
         printf("\n\t\033[0;38;5;1mПомилка. Введіть корректний пункт меню\033[0m\n");
-        goto point1; //повернення до 57 рядка
+        goto point1; 
         break;
     }
     point2:
@@ -179,7 +179,7 @@ void findticket()
         break;
     case 9:
         system("cls");
-        goto point1; //повернення до 57 рядка
+        goto point1; 
         break;
     case 0:
         system("cls");
@@ -188,7 +188,7 @@ void findticket()
     default:
         system("cls");
         printf("\n\t\033[0;38;5;1mПомилка. Введіть корректний пункт меню\033[0m\n");
-        goto point2; //повернення до 103 рядка
+        goto point2; 
         break;
     }
 
@@ -232,7 +232,7 @@ void findticket()
         break;
     case 9:
         system("cls");
-        goto point1; //повернення до 161 рядка
+        goto point1; 
         break;
     case 0:
         system("cls");
@@ -241,7 +241,7 @@ void findticket()
     default:
         system("cls");
         printf("\n\t\033[0;38;5;1mПомилка. Введіть корректний пункт меню\033[0m\n");
-        goto point3; //повернення до 161 рядка
+        goto point3; 
         break;
     }
 
@@ -256,11 +256,19 @@ void findticket()
 
     int indexticket;
     indexticket = waycode + datecode + timecode + placeticket;
-    readyticket[countticket].code = indexticket;
-    ticket[indexticket] = 1;
-    system("cls");
-    printf("Квиток №%d успішо заброньовано.\nДо сплати: \033[0;38;5;160m%.2f грн\033[0m\n\n3", readyticket[countticket].code, readyticket[countticket].price);
-    countticket++;
+    if (ticket[indexticket] == 0)
+    {
+        readyticket[countticket].code = indexticket;
+        ticket[indexticket] = 1;
+        system("cls");
+        printf("Квиток №%d успішо заброньовано.\nДо сплати: \033[0;38;5;160m%.2f грн\033[0m\n\n", readyticket[countticket].code, readyticket[countticket].price);
+        countticket++;
+    }
+    else
+    {
+        system("cls");
+        printf ("\n\033[0;38;5;160mМісце зайняте\033[0m\n");
+    }
     goto point1;
     
 }
