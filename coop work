@@ -437,7 +437,7 @@ void check()
             printf("\n______________________________\n");
             cost += readyticket[i].price;
         }
-        printf("\033[1;38;5mДо сплати: \033[4;38;5m%.2f\033[0m", cost);
+        printf("\033[1;38;5mДо сплати: \033[4;38;5m%.2f\n\033[0m", cost);
     }
     free (customername);
     usermenu();
