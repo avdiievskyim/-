@@ -1,0 +1,272 @@
+#include <stdio.h>
+#include <windows.h>
+#include <conio.h>
+#include <string.h>
+
+
+
+void usermenu ();
+void findticket ();
+
+
+
+
+int countticket = 0;
+int* ticket;
+
+typedef struct 
+{
+    int code;
+    char way[40];
+    char date[12];
+    char time[6];
+    int place;
+    float price;
+}BOOKEDTICKET;
+BOOKEDTICKET* readyticket;
+
+
+
+
+int main()
+{
+    SetConsoleCP(1251);  
+    SetConsoleOutputCP(1251);
+    ticket = (int*)calloc(4300, sizeof(int));
+
+    // Перевірка успішності виділення пам'яті
+    if (ticket == NULL)
+    {
+        printf("\nПомилка виділення пам'яті!");
+    }
+    else
+    {
+        readyticket = (BOOKEDTICKET*)calloc(50, sizeof(BOOKEDTICKET));
+        if (readyticket == NULL)
+            printf("\nПомилка, не вдалося виділити пам'ять");
+        else
+        {
+            usermenu ();
+        }
+    }
+    system("cls");
+    getch();
+    return 0;
+}
+
+void usermenu ()
+{
+    int continuekey;
+    do
+    {
+        continuekey = 0;
+        printf("\n\t\t\033[3;38;5;2mМеню\033[0m\n");
+        printf("1. Пошук квитків\n2. Мої поїздки\n3. Відмовитись від квитка\n4. Надрукувати чек\n0. Вихід з програми\n");
+        char keymenu;
+        keymenu = getche();
+        switch (keymenu)
+        {
+        case 49:
+            system("cls");
+            findticket();
+            break;
+        case 50:
+            system("cls");
+
+            break;
+        case 48:
+            system("cls");
+            exit(1);
+            break;
+        case 51:
+            system("cls");
+            
+            break;
+        case 52:
+            system("cls");
+            
+            break;
+        default:
+            system("cls");
+            printf("\n\t\033[0;38;5;1mПомилка. Введіть корректний пункт меню\033[0m\n");
+            continuekey++;
+            break;
+        }
+    }
+    while (continuekey == 1);
+}
+
+void findticket()
+{
+    system("cls");
+    point1:
+    //Обираємо напрямок
+    printf("\n\tОберіть один із запропонованих напрямків:");
+    printf("\n1. Київ - Львів");
+    printf("\n2. Київ - Одеса");
+    printf("\n3. Київ - Запоріжжя");
+    printf("\n4. Київ - Дніпро");
+    printf("\n0. Повернутися до головного меню\n");
+    int wayticket, waycode, dateticket, datecode, timeticket, timecode, placeticket;
+    
+    scanf("%d", &wayticket);
+    switch (wayticket)
+    {
+    case 1:
+        waycode = 0;
+        strcpy(readyticket[countticket].way, "Київ - Львів");
+        readyticket[countticket].price = 527.51;
+        system("cls");
+        break;
+    case 2:
+        waycode = 1050;
+        strcpy(readyticket[countticket].way, "Київ - Одеса");
+        readyticket[countticket].price = 541.29;
+        system("cls");
+        break;
+    case 3:
+        waycode = 2100;
+        strcpy(readyticket[countticket].way, "Київ - Запоріжжя");
+        readyticket[countticket].price = 712.78;
+        system("cls");
+        break;
+    case 4:
+        waycode = 3150;
+        strcpy(readyticket[countticket].way, "Київ - Дніпро");
+        readyticket[countticket].price = 573.22;
+        system("cls");
+        break;
+    case 0:
+        system("cls");
+        usermenu();
+        break;
+    default:
+        system("cls");
+        printf("\n\t\033[0;38;5;1mПомилка. Введіть корректний пункт меню\033[0m\n");
+        goto point1; 
+        break;
+    }
+    point2:
+    //Обираємо дату
+    printf("\n\tОберіть дату");
+    printf("\n1. Пн, 24.07");
+    printf("\n2. Вт, 25.07");
+    printf("\n3. Ср, 26.07");
+    printf("\n4. Чт, 27.07");
+    printf("\n5. Пт, 28.07");
+    printf("\n6. Сб, 29.07");
+    printf("\n7. Нд, 30.07");
+    printf("\n9. Повернутися назад");
+    printf("\n0. Повернутися до головного меню\n");
+    scanf("%d", &dateticket);
+    switch (dateticket)
+    {
+    case 1:
+        datecode = 0;
+        strcpy(readyticket[countticket].date, "Пн, 24.07");
+        system("cls");
+        break;
+    case 2:
+        datecode = 150;
+        strcpy(readyticket[countticket].date, "Вт, 25.07");
+        system("cls");
+        break;
+    case 3:
+        datecode = 300;
+        strcpy(readyticket[countticket].date, "Ср, 26.07");
+        system("cls");
+        break;
+    case 4:
+        datecode = 450;
+        strcpy(readyticket[countticket].date, "Чт, 27.07");
+        system("cls");
+        break;
+    case 5:
+        datecode = 600;
+        strcpy(readyticket[countticket].date, "Пт, 28.07");
+        system("cls");
+        break;
+    case 6:
+        datecode = 750;
+        strcpy(readyticket[countticket].date, "Сб, 29.07");
+        system("cls");
+        break;
+    case 7:
+        datecode = 900;
+        strcpy(readyticket[countticket].date, "Нд, 30.07");
+        system("cls");
+        break;
+    case 9:
+        system("cls");
+        goto point1; 
+        break;
+    case 0:
+        system("cls");
+        usermenu();
+        break;
+    default:
+        system("cls");
+        printf("\n\t\033[0;38;5;1mПомилка. Введіть корректний пункт меню\033[0m\n");
+        goto point2; 
+        break;
+    }
+
+    point3:
+    //Обираємо час
+    printf("\n\tОберіть час");
+    printf("\n1. 9:02");
+    printf("\n2. 12:31");
+    printf("\n3. 15:48");
+    printf("\n4. 17:12");
+    printf("\n5. 22:08");
+    printf("\n9. Повернутися назад");
+    printf("\n0. Повернутися до головного меню\n");
+    scanf("%d", &timeticket);
+    switch (timeticket)
+    {
+    case 1:
+        timecode = 0;
+        strcpy(readyticket[countticket].time, "9:02");
+        system("cls");
+        break;
+    case 2:
+        timecode = 30;
+        strcpy(readyticket[countticket].time, "12:31");
+        system("cls");
+        break;
+    case 3:
+        timecode = 60;
+        strcpy(readyticket[countticket].time, "15:48");
+        system("cls");
+        break;
+    case 4:
+        timecode = 90;
+        strcpy(readyticket[countticket].time, "17:12");
+        system("cls");
+        break;
+    case 5:
+        timecode = 120;
+        strcpy(readyticket[countticket].time, "22:08");
+        system("cls");
+        break;
+    case 9:
+        system("cls");
+        goto point2; 
+        break;
+    case 0:
+        system("cls");
+        usermenu();
+        break;
+    default:
+        system("cls");
+        printf("\n\t\033[0;38;5;1mПомилка. Введіть корректний пункт меню\033[0m\n");
+        goto point3; 
+        break;
+    }
+
+   
+    usermenu();
+    
+}
+
+
